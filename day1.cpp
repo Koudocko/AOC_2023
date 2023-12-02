@@ -75,7 +75,6 @@ int main(){
     std::string word;
 
     for (char idx : line){
-      // PART ONE
       if (isdigit(idx)){
         if (!first)
           first = idx;
@@ -83,7 +82,6 @@ int main(){
 
         word.clear();
       }
-      // PART TWO
       else{
         word += idx;
 

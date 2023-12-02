@@ -90,25 +90,20 @@ int main(){
 
       while (std::getline(set, buf, ',')){
         std::stringstream hand(buf); 
-        int num_cubes{};
         std::string colour;
+        int num_cubes{};
 
         hand >> num_cubes >> colour;
 
-        if (num_cubes > cubes[colour]){
+        if (num_cubes > cubes[colour])
           possible = false;
-        }
-
         if (cubes_min[colour] < num_cubes)
           cubes_min[colour] = num_cubes;
       }
     }
 
-    // PART 1
     if (possible)
       total_1 += game_num;
-
-    // PART 2
     total_2 += cubes_min["red"] * cubes_min["green"] * cubes_min["blue"];
   }
 
