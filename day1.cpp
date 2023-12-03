@@ -48,20 +48,19 @@ Your puzzle answer was 52840.
 
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <unordered_map>
 
 int main(){
   std::unordered_map<std::string, char> nums{
-    { "one", '1' },
-    { "two", '2' },
-    { "three", '3' },
-    { "four", '4' },
-    { "five", '5' },
-    { "six", '6' },
-    { "seven", '7' },
-    { "eight", '8' },
-    { "nine", '9' }
+    { "one", '1' }, { "1", '1' },
+    { "two", '2' }, { "2", '2' },
+    { "three", '3' }, { "3", '3' },
+    { "four", '4' }, { "4", '4' },
+    { "five", '5' }, { "5", '5' },
+    { "six", '6' }, { "6", '6' },
+    { "seven", '7' }, { "7", '7' },
+    { "eight", '8' }, { "8", '8' },
+    { "nine", '9' }, { "9", '9' }
   };
 
   std::ifstream file;
@@ -71,32 +70,23 @@ int main(){
 
   std::string line;
   while (std::getline(file, line)){
-    char first{}, last{};
+    int first{}, last{};
     std::string word;
 
     for (char idx : line){
-      if (isdigit(idx)){
-        if (!first)
-          first = idx;
-        last = idx;
+      word += idx;
 
-        word.clear();
-      }
-      else{
-        word += idx;
-
-        for (auto num : nums){
-          if(num.first.length() <= word.length() &&
-            word.substr(word.length() - num.first.length()) == num.first){
-            if (!first)
-              first = num.second;
-            last = num.second;
-          }
+      for (auto num : nums){
+        if(num.first.length() <= word.length() &&
+          word.substr(word.length() - num.first.length()) == num.first){
+          if (!first)
+            first = num.second;
+          last = num.second;
         }
       }
     }
 
-    total += std::stoi(std::string() + first + last);
+    total += 10 * (first - 48) + last - 48;
   }
 
   std::cout << total << std::endl;
