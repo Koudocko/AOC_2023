@@ -68,12 +68,12 @@ int main(){
 
   int total{};
 
-  std::string line;
-  while (std::getline(file, line)){
+  std::string buf;
+  while (std::getline(file, buf)){
     int first{}, last{};
     std::string word;
 
-    for (char idx : line){
+    for (char idx : buf){
       word += idx;
 
       for (auto num : nums){
