@@ -71,7 +71,6 @@ Once all of the originals and copies have been processed, you end up with 1 inst
 Process all of the original and copied scratchcards until no more scratchcards are won. Including the original set of scratchcards, how many total scratchcards do you end up with?
 */
 
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
