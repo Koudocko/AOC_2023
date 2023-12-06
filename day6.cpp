@@ -94,32 +94,33 @@ std::vector<race> p1_input(std::string& times, std::string& distances){
   return races;
 }
 
+long long solve_race(const std::vector<race>& races){
+  long long total = 1;
+
+  for (const auto& race : races){
+      long long first_win{};
+
+      for (long long i = 1; i < race.first; ++i)
+        if ((race.first - i) * i > race.second){
+          first_win = i;
+          break;
+        }
+
+      total *= (race.first - 2 * first_win) + 1;
+    }
+
+  return total;
+}
+
 int main(){
   std::ifstream file;
   file.open("day6_input");
-
-  std::vector<race> races;
-  long long total = 1, time{}, distance{};
 
   std::string buf, times = (std::getline(file, buf), 
       buf.substr(buf.find(':') + 1)),
     distances = (std::getline(file, buf), 
       buf.substr(buf.find(':') + 1));
 
-  races = p1_input(times, distances);
-  /* races.push_back(p2_input(times, distances)); */
-
-  for (const auto& race : races){
-    long long first_win{};
-
-    for (long long i = 1; i < race.first; ++i)
-      if ((race.first - i) * i > race.second){
-        first_win = i;
-        break;
-      }
-
-    total *= (race.first - 2 * first_win) + 1;
-  }
-
-  std::cout << total << std::endl;
+  std::cout << solve_race(p1_input(times, distances)) << std::endl
+    << solve_race(std::vector<race>{ p2_input(times, distances) }) << std::endl;
 }
