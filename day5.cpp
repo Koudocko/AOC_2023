@@ -34,25 +34,25 @@ int main(){
 
       for (auto& source : sources){
         long long curr_start = std::get<1>(source),
-             curr_end = std::get<1>(source) + std::get<2>(source),
-             source_end = source_start + range_length;
+             curr_end = std::get<1>(source) + std::get<2>(source) - 1,
+             source_end = source_start + range_length - 1;
 
         if (curr_start < source_start &&
             curr_end > source_start){
-          if (curr_end < source_end){
+          if (curr_end <= source_end){
             std::cout << "1: " << curr_start << ", " << curr_end - curr_start << " =>" << std::endl;
-            std::get<2>(source) = source_start - curr_start;
+            std::get<2>(source) = (source_start - curr_start) + 1;
             std::cout << "\t" << std::get<1>(source) << ", " << std::get<2>(source) << std::endl;
             splits.emplace_back(
               false,
               source_start + (destination_start - source_start),
-              (curr_end - source_start)
+              (curr_end - source_start) + 1
             );
             std::cout << "\t" << std::get<1>(splits.back()) << ", " << std::get<2>(splits.back()) << std::endl;
           }
           else{
             std::cout << "2: " << curr_start << ", " << curr_end - curr_start << " =>" << std::endl;
-            std::get<2>(source) = source_start - curr_start;
+            std::get<2>(source) = (source_start - curr_start) + 1;
             std::cout << "\t" << std::get<1>(source) << ", " << std::get<2>(source) << std::endl;
             splits.emplace_back(
               false,
@@ -60,21 +60,21 @@ int main(){
               range_length
             );
             std::cout << "\t" << std::get<1>(splits.back()) << ", " << std::get<2>(splits.back()) << std::endl;
-            splits.emplace_back(true, source_end, curr_end - source_end);
+            splits.emplace_back(true, source_end, (curr_end - source_end) + 1);
             std::cout << "\t" << std::get<1>(splits.back()) << ", " << std::get<2>(splits.back()) << std::endl;
           }
         }
         else if (curr_start >= source_start &&
-            curr_start < source_end){
+            curr_start <= source_end){
           if (curr_end > source_end){
             std::cout << "3: " << curr_start << ", " << curr_end - curr_start << " =>" << std::endl;
             source = {
               false,
               curr_start + (destination_start - source_start),
-              (source_end - curr_start)
+              (source_end - curr_start) + 1
             };
             std::cout << "\t" << std::get<1>(source) << ", " << std::get<2>(source) << std::endl;
-            splits.emplace_back(true, source_end, curr_end - source_end);
+            splits.emplace_back(true, source_end, (curr_end - source_end) + 1);
             std::cout << "\t" << std::get<1>(splits.back()) << ", " << std::get<2>(splits.back()) << std::endl;
           }
           else{
@@ -82,7 +82,7 @@ int main(){
             source = {
               false,
               curr_start + (destination_start - source_start),
-              (curr_end - curr_start)
+              (curr_end - curr_start) + 1
             };
             std::cout << "\t" << std::get<1>(source) << ", " << std::get<2>(source) << std::endl;
           }
